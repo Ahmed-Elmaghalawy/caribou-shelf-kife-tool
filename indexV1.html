@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Shelf Life Calculator — Day Dots</title>
+<style>
+  body { font-family: Arial, Helvetica, sans-serif; margin: 18px; background:#f6f6f6; color:#222 }
+  h1 { margin:0 0 8px 0; font-size:20px }
+  p.lead { margin:0 0 18px 0; color:#444 }
+  table { width:100%; border-collapse:collapse; background:#fff; box-shadow:0 1px 3px rgba(0,0,0,.08) }
+  th, td { padding:8px 10px; border-bottom:1px solid #eee; text-align:left; vertical-align:middle }
+  th { background:#fafafa; font-weight:700; font-size:13px; color:#333 }
+  .dot { width:20px; height:20px; border-radius:50%; display:inline-block; vertical-align:middle; margin-right:8px; box-shadow:0 0 0 1px rgba(0,0,0,.06) }
+  .red { background:#d9534f }      /* Mon */
+  .green { background:#5cb85c }    /* Tue */
+  .blue { background:#337ab7 }     /* Wed */
+  .purple { background:#a64ca6 }   /* Thu */
+  .black { background:#222 }       /* Fri */
+  .yellow { background:#f0ad4e }   /* Sat (using an orange-ish yellow for visibility) */
+  .orange { background:#ff8c00 }   /* Sun */
+  .controls { display:flex; gap:8px; flex-wrap:wrap; align-items:center }
+  .btn { padding:6px 10px; border-radius:6px; border:1px solid #ccc; background:#fff; cursor:pointer }
+  .btn.primary { background:#337ab7; color:#fff; border-color:#2e6da4 }
+  .result { font-weight:700; color:#111 }
+  .small { font-size:12px; color:#666 }
+  input[type="date"] { padding:6px; border-radius:6px; border:1px solid #ccc }
+  select { padding:6px; border-radius:6px; border:1px solid #ccc }
+  .product-name { max-width:260px; word-break:break-word }
+  .storage { font-size:12px; color:#555 }
+  @media (max-width:900px){
+    th:nth-child(4), td:nth-child(4) { display:none } /* hide secondary on mobile to save space */
+  }
+</style>
+</head>
+<body>
+
+<h1>Shelf Life Calculator — Day Dots</h1>
+<p class="lead">Offline tool. Choose a date (manufactured/opened), pick Primary (months) or Secondary (days), then calculate expiry. The colored dot shows the weekday color (Day Dots Guide).</p>
+
+<div style="margin-bottom:10px" class="controls">
+  <button id="calcAll" class="btn primary">Calculate All</button>
+  <button id="clearAll" class="btn">Clear All</button>
+  <div style="margin-left:auto" class="small">Primary = months (original expiry). Secondary = days (after opening).</div>
+</div>
+
+<table id="productsTable">
+  <thead>
+    <tr>
+      <th>Product</th>
+      <th>Storage</th>
+      <th>Primary (months)</th>
+      <th>Secondary (days)</th>
+      <th>Opened / Mfg Date</th>
+      <th>Which</th>
+      <th>Expiry Date</th>
+      <th>Day Dot</th>
+    </tr>
+  </thead>
+  <tbody id="productsBody">
+    <!-- Rows injected by JS -->
+  </tbody>
+</table>
+
+<script>
+/*
+  Product data below taken (extracted) from uploaded PDF: "Shelf Life Chart 10.24.pdf".
+  The list focuses on main beverage / condiment / mix-in items from that chart.
+  If you want additional items added, edit the array below (primaryMonths can be null, secondaryDays can be null).
+  Citation: source file uploaded by user. :contentReference[oaicite:1]{index=1}
+*/
+
+const products = [
+  { name: "Monin Flavor Syrup", primaryMonths: 18, secondaryDays: 60, storage: "Room Temp" },
+  { name: "Monin Coconut Syrup", primaryMonths: 36, secondaryDays: 60, storage: "Room Temp" },
+  { name: "Smoothie Mix", primaryMonths: 12, secondaryDays: 7, storage: "Chiller" },
+  { name: "Chocolate Sauces & Alternative", primaryMonths: 12, secondaryDays: 30, storage: "Room Temp" },
+  { name: "Caramel Sauce", primaryMonths: 9, secondaryDays: 14, storage: "Room Temp" },
+  { name: "Chocolate/Caramel Drizzle", primaryMonths: null, secondaryDays: 7, storage: "Room Temp" },
+  { name: "Dark Chocolate Chips", primaryMonths: 24, secondaryDays: null, storage: "Room Temp" },
+  { name: "Milk Chocolate Chips", primaryMonths: 18, secondaryDays: null, storage: "Room Temp" },
+  { name: "White Chocolate Chips", primaryMonths: 12, secondaryDays: null, storage: "Room Temp" },
+  { name: "Salt & Sugar Mixture", primaryMonths: 24, secondaryDays: 90, storage: "Room Temp" },
+  { name: "Chai Powder", primaryMonths: 12, secondaryDays: 30, storage: "Room Temp" },
+  { name: "Fullfat/Skimmed/Lowfat Milk", primaryMonths: 6, secondaryDays: 3, storage: "Chiller once opened" },
+  { name: "Bou Powder", primaryMonths: 12, secondaryDays: 30, storage: "Room Temp" },
+  { name: "Almond/Rice/Oat Milk (Alpro)", primaryMonths: 9, secondaryDays: 5, storage: "Chiller once opened" },
+  { name: "Soy & Coconut Milk (Alpro)", primaryMonths: 10, secondaryDays: 5, storage: "Chiller once opened" },
+  { name: "Hot Cocoa Powder", primaryMonths: null, secondaryDays: null, storage: "Room Temp" },
+  { name: "Lactose Free Milk", primaryMonths: 4, secondaryDays: 3, storage: "Chiller once opened" },
+  { name: "Matcha Powder", primaryMonths: 18, secondaryDays: 90, storage: "Room Temp" },
+  { name: "Heavy Cream", primaryMonths: 9, secondaryDays: 3, storage: "Chiller once opened" },
+  { name: "Brown Sugar Sachets", primaryMonths: 24, secondaryDays: null, storage: "Room Temp" },
+  { name: "White Sugar Sachets", primaryMonths: 24, secondaryDays: null, storage: "Room Temp" },
+  { name: "Bulk Granulated Sugar", primaryMonths: 36, secondaryDays: null, storage: "Room Temp" },
+  { name: "Honey", primaryMonths: 36, secondaryDays: 90, storage: "Room Temp" },
+  { name: "Cinnamon", primaryMonths: null, secondaryDays: 90, storage: "Room Temp" },
+  { name: "Nutmeg", primaryMonths: null, secondaryDays: 90, storage: "Room Temp" },
+  { name: "Turkish Coffee", primaryMonths: 18, secondaryDays: 10, storage: "Room Temp" },
+  { name: "Boodies Tea Sachets", primaryMonths: 36, secondaryDays: null, storage: "Room Temp" },
+  { name: "Snicker Bits (mix-ins)", primaryMonths: 12, secondaryDays: 90, storage: "Chiller" },
+  { name: "Oreo Cookies (mix-ins)", primaryMonths: 12, secondaryDays: 90, storage: "Room Temp" },
+  { name: "Marshmallow Bits", primaryMonths: 12, secondaryDays: null, storage: "Room Temp" },
+  { name: "Nibblers", primaryMonths: 9, secondaryDays: null, storage: "Room Temp" },
+  // Add any other items from your sheet here...
+];
+
+/* helper to create a table row for each product */
+function buildRow(prod, index){
+  const tr = document.createElement('tr');
+  tr.innerHTML = `
+    <td class="product-name"><div style="font-weight:600">${escapeHTML(prod.name)}</div></td>
+    <td class="storage small">${escapeHTML(prod.storage || '')}</td>
+    <td>${prod.primaryMonths !== null && prod.primaryMonths !== undefined ? prod.primaryMonths + ' mo' : '-'}</td>
+    <td>${prod.secondaryDays !== null && prod.secondaryDays !== undefined ? prod.secondaryDays + ' days' : '-'}</td>
+    <td><input type="date" id="date_${index}" /></td>
+    <td>
+      <select id="which_${index}">
+        <option value="primary">Primary (months)</option>
+        <option value="secondary">Secondary (days)</option>
+      </select>
+    </td>
+    <td id="expiry_${index}" class="result">—</td>
+    <td id="dot_${index}"><span class="dot" style="opacity:.2"></span></td>
+  `;
+  return tr;
+}
+
+/* escape utility (small) */
+function escapeHTML(s){ return String(s).replace(/[&<>"']/g, function(m){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]; }); }
+
+/* weekday -> css class */
+function dotClassForWeekday(w){
+  // get 0 = Sunday, 1 = Monday ... 6 = Saturday
+  // map to our color classes:
+  switch(w){
+    case 1: return 'red';    // Monday
+    case 2: return 'green';  // Tuesday
+    case 3: return 'blue';   // Wednesday
+    case 4: return 'purple'; // Thursday
+    case 5: return 'black';  // Friday
+    case 6: return 'yellow'; // Saturday
+    case 0: return 'orange'; // Sunday
+    default: return '';
+  }
+}
+
+function formatDateISO(d){
+  if(!(d instanceof Date) || isNaN(d)) return 'Invalid';
+  const y = d.getFullYear();
+  const m = String(d.getMonth()+1).padStart(2,'0');
+  const day = String(d.getDate()).padStart(2,'0');
+  return `${y}-${m}-${day}`;
+}
+
+/* add months to date -- keeps day consistent where possible */
+function addMonths(date, months){
+  const d = new Date(date.getTime());
+  const targetMonth = d.getMonth() + months;
+  d.setMonth(targetMonth);
+  // if month overflow caused date shift, fix by setting to last day of prev month if needed
+  if(d.getMonth() !== ((targetMonth)%12 + 12)%12){
+    d.setDate(0); // go to last day of previous month
+  }
+  return d;
+}
+
+/* add days */
+function addDays(date, days){
+  const d = new Date(date.getTime());
+  d.setDate(d.getDate() + days);
+  return d;
+}
+
+/* calculate single row */
+function calculateRow(index){
+  const prod = products[index];
+  const dateInput = document.getElementById('date_' + index);
+  const which = document.getElementById('which_' + index).value;
+  const expiryCell = document.getElementById('expiry_' + index);
+  const dotCell = document.getElementById('dot_' + index);
+
+  expiryCell.textContent = '—';
+  dotCell.innerHTML = `<span class="dot" style="opacity:.2"></span>`;
+
+  if(!dateInput.value){
+    expiryCell.textContent = 'Pick date';
+    return;
+  }
+  const baseDate = new Date(dateInput.value + 'T00:00:00');
+  if(isNaN(baseDate)) { expiryCell.textContent = 'Invalid date'; return; }
+
+  let expiry;
+  if(which === 'primary'){
+    if(prod.primaryMonths === null || prod.primaryMonths === undefined){ expiryCell.textContent = 'No primary'; return; }
+    expiry = addMonths(baseDate, Number(prod.primaryMonths));
+  } else {
+    if(prod.secondaryDays === null || prod.secondaryDays === undefined){ expiryCell.textContent = 'No secondary'; return; }
+    expiry = addDays(baseDate, Number(prod.secondaryDays));
+  }
+
+  expiryCell.textContent = formatDateISO(expiry);
+
+  const weekday = expiry.getDay(); // 0 Sun ... 6 Sat
+  const cls = dotClassForWeekday(weekday);
+  const label = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'][weekday];
+  dotCell.innerHTML = `<span class="dot ${cls}" title="${label}"></span> <span class="small">${label}</span>`;
+}
+
+/* build table on load */
+const tbody = document.getElementById('productsBody');
+products.forEach((p,i)=> {
+  const row = buildRow(p,i);
+  tbody.appendChild(row);
+
+  // add event listeners: auto-calc when user changes date or which
+  document.addEventListener('change', (ev) => {
+    if(ev.target && (ev.target.id === `date_${i}` || ev.target.id === `which_${i}`)){
+      calculateRow(i);
+    }
+  });
+});
+
+/* Calculate All button */
+document.getElementById('calcAll').addEventListener('click', ()=> {
+  products.forEach((_,i)=> calculateRow(i));
+});
+
+/* Clear all */
+document.getElementById('clearAll').addEventListener('click', ()=> {
+  products.forEach((_,i)=>{
+    const d = document.getElementById('date_' + i);
+    const exp = document.getElementById('expiry_' + i);
+    const dot = document.getElementById('dot_' + i);
+    if(d) d.value = '';
+    if(exp) exp.textContent = '—';
+    if(dot) dot.innerHTML = `<span class="dot" style="opacity:.2"></span>`;
+  });
+});
+
+/* helpful: double-click a product name to set today's date for a quick check */
+tbody.addEventListener('dblclick', (ev) => {
+  const tr = ev.target.closest('tr');
+  if(!tr) return;
+  const idx = Array.from(tbody.children).indexOf(tr);
+  if(idx >= 0){
+    const input = document.getElementById('date_' + idx);
+    const today = new Date();
+    input.value = formatDateISO(today);
+    calculateRow(idx);
+  }
+});
+
+</script>
+
+</body>
+</html>
