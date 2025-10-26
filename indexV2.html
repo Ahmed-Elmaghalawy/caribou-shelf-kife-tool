@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Shelf Life Calculator — Day Dots</title>
+<style>
+  body { font-family: Arial, Helvetica, sans-serif; margin: 18px; background:#f6f6f6; color:#222 }
+  h1 { margin:0 0 8px 0; font-size:20px }
+  p.lead { margin:0 0 18px 0; color:#444 }
+  table { width:100%; border-collapse:collapse; background:#fff; box-shadow:0 1px 3px rgba(0,0,0,.08) }
+  th, td { padding:8px 10px; border-bottom:1px solid #eee; text-align:left; vertical-align:middle }
+  th { background:#fafafa; font-weight:700; font-size:13px; color:#333 }
+  .dot { width:20px; height:20px; border-radius:50%; display:inline-block; vertical-align:middle; margin-right:8px; box-shadow:0 0 0 1px rgba(0,0,0,.06) }
+  .red { background:#d9534f }      /* Mon */
+  .green { background:#5cb85c }    /* Tue */
+  .blue { background:#337ab7 }     /* Wed */
+  .purple { background:#a64ca6 }   /* Thu */
+  .black { background:#222 }       /* Fri */
+  .yellow { background:#f0ad4e }   /* Sat */
+  .orange { background:#ff8c00 }   /* Sun */
+  .controls { display:flex; gap:8px; flex-wrap:wrap; align-items:center }
+  .btn { padding:6px 10px; border-radius:6px; border:1px solid #ccc; background:#fff; cursor:pointer }
+  .btn.primary { background:#337ab7; color:#fff; border-color:#2e6da4 }
+  .result { font-weight:700; color:#111 }
+  .small { font-size:12px; color:#666 }
+  input[type="date"] { padding:6px; border-radius:6px; border:1px solid #ccc }
+  select { padding:6px; border-radius:6px; border:1px solid #ccc }
+  .product-name { max-width:260px; word-break:break-word }
+  .storage { font-size:12px; color:#555 }
+  @media (max-width:900px){
+    th:nth-child(4), td:nth-child(4) { display:none }
+  }
+</style>
+</head>
+<body>
+
+<h1>Shelf Life Calculator — Day Dots</h1>
+<p class="lead">Offline tool. Each date defaults to today. Choose Primary (months) or Secondary (days), then calculate expiry. Colored dot = expiry weekday color.</p>
+
+<div style="margin-bottom:10px" class="controls">
+  <button id="calcAll" class="btn primary">Calculate All</button>
+  <button id="clearAll" class="btn">Clear All</button>
+  <div style="margin-left:auto" class="small">Primary = months (original expiry). Secondary = days (after opening).</div>
+</div>
+
+<table id="productsTable">
+  <thead>
+    <tr>
+      <th>Product</th>
+      <th>Storage</th>
+      <th>Primary (months)</th>
+      <th>Secondary (days)</th>
+      <th>Opened / Mfg Date</th>
+      <th>Which</th>
+      <th>Expiry Date</th>
+      <th>Day Dot</th>
+    </tr>
+  </thead>
+  <tbody id="productsBody"></tbody>
+</table>
+
+<script>
+function escapeHTML(s){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));}
+function dotClassForWeekday(w){return['orange','red','green','blue','purple','black','yellow'][w];}
+function formatDateISO(d){return`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;}
+function addMonths(date,m){let d=new Date(date);let mth=d.getMonth()+m;d.setMonth(mth);if(d.getMonth()!=((mth)%12+12)%12)d.setDate(0);return d;}
+function addDays(date,n){let d=new Date(date);d.setDate(d.getDate()+n);return d;}
+
+const today = new Date();
+const todayStr = formatDateISO(today);
+const tbody = document.getElementById('productsBody');
+
+let products = [];
+
+fetch('products.json')
+  .then(res => res.json())
+  .then(data => {
+    products = data;
+    renderProducts();
+  })
+  .catch(err => console.error("Error loading products.json:", err));
+
+function renderProducts(){
+  tbody.innerHTML = "";
+  products.forEach((p,i)=>{
+    const tr=document.createElement('tr');
+    tr.innerHTML=`
+      <td class="product-name"><b>${escapeHTML(p.name)}</b></td>
+      <td class="storage small">${escapeHTML(p.storage||'')}</td>
+      <td>${p.primaryMonths? p.primaryMonths+' mo':'-'}</td>
+      <td>${p.secondaryDays? p.secondaryDays+' days':'-'}</td>
+      <td><input type="date" id="date_${i}" value="${todayStr}" /></td>
+      <td>
+        <select id="which_${i}">
+          <option value="primary">Primary</option>
+          <option value="secondary">Secondary</option>
+        </select>
+      </td>
+      <td id="expiry_${i}" class="result">—</td>
+      <td id="dot_${i}"><span class="dot" style="opacity:.2"></span></td>`;
+    tbody.appendChild(tr);
+  });
+}
+
+function calcRow(i){
+  const p=products[i];
+  const dateInput=document.getElementById('date_'+i);
+  const which=document.getElementById('which_'+i).value;
+  const expCell=document.getElementById('expiry_'+i);
+  const dotCell=document.getElementById('dot_'+i);
+  const base=new Date(dateInput.value+'T00:00:00');
+  let exp;
+  if(which==='primary'){
+    if(!p.primaryMonths){expCell.textContent='No primary';return;}
+    exp=addMonths(base,p.primaryMonths);
+  } else {
+    if(!p.secondaryDays){expCell.textContent='No secondary';return;}
+    exp=addDays(base,p.secondaryDays);
+  }
+  expCell.textContent=formatDateISO(exp);
+  const w=exp.getDay();
+  const c=dotClassForWeekday(w);
+  const label=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'][w];
+  dotCell.innerHTML=`<span class="dot ${c}" title="${label}"></span> <span class="small">${label}</span>`;
+}
+
+document.getElementById('calcAll').onclick=()=>products.forEach((_,i)=>calcRow(i));
+document.getElementById('clearAll').onclick=()=>products.forEach((_,i)=>{
+  const d=document.getElementById('date_'+i);
+  const e=document.getElementById('expiry_'+i);
+  const dot=document.getElementById('dot_'+i);
+  d.value=todayStr; e.textContent='—'; dot.innerHTML='<span class="dot" style="opacity:.2"></span>';
+});
+</script>
+
+</body>
+</html>
