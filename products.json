@@ -1,0 +1,43 @@
+{
+  "Syrups": [
+    { "name": "Monin Flavor Syrup", "primaryMonths": 18, "secondaryDays": 60, "storage": "Room Temp", "image": "syrup.png" },
+    { "name": "Monin Coconut Syrup", "primaryMonths": 36, "secondaryDays": 60, "storage": "Room Temp", "image": "syrup.png" }
+  ],
+  "Sauces": [
+    { "name": "Chocolate Sauces & Alternative", "primaryMonths": 12, "secondaryDays": 30, "storage": "Room Temp", "image": "sauce.png" },
+    { "name": "Caramel Sauce", "primaryMonths": 9, "secondaryDays": 14, "storage": "Room Temp", "image": "sauce.png" },
+    { "name": "Chocolate/Caramel Drizzle", "primaryMonths": null, "secondaryDays": 7, "storage": "Room Temp", "image": "sauce.png" }
+  ],
+  "Milks": [
+    { "name": "Fullfat/Skimmed/Lowfat Milk", "primaryMonths": 6, "secondaryDays": 3, "storage": "Chiller once opened", "image": "milk.png" },
+    { "name": "Almond/Rice/Oat Milk (Alpro)", "primaryMonths": 9, "secondaryDays": 5, "storage": "Chiller once opened", "image": "milk.png" },
+    { "name": "Soy & Coconut Milk (Alpro)", "primaryMonths": 10, "secondaryDays": 5, "storage": "Chiller once opened", "image": "milk.png" },
+    { "name": "Lactose Free Milk", "primaryMonths": 4, "secondaryDays": 3, "storage": "Chiller once opened", "image": "milk.png" }
+  ],
+  "Mix-ins": [
+    { "name": "Dark Chocolate Chips", "primaryMonths": 24, "secondaryDays": null, "storage": "Room Temp", "image": "mixins.png" },
+    { "name": "Milk Chocolate Chips", "primaryMonths": 18, "secondaryDays": null, "storage": "Room Temp", "image": "mixins.png" },
+    { "name": "White Chocolate Chips", "primaryMonths": 12, "secondaryDays": null, "storage": "Room Temp", "image": "mixins.png" },
+    { "name": "Snicker Bits (mix-ins)", "primaryMonths": 12, "secondaryDays": 90, "storage": "Chiller", "image": "mixins.png" },
+    { "name": "Oreo Cookies (mix-ins)", "primaryMonths": 12, "secondaryDays": 90, "storage": "Room Temp", "image": "mixins.png" },
+    { "name": "Marshmallow Bits", "primaryMonths": 12, "secondaryDays": null, "storage": "Room Temp", "image": "mixins.png" },
+    { "name": "Nibblers", "primaryMonths": 9, "secondaryDays": null, "storage": "Room Temp", "image": "mixins.png" }
+  ],
+  "Powders & Others": [
+    { "name": "Smoothie Mix", "primaryMonths": 12, "secondaryDays": 7, "storage": "Chiller", "image": "powder.png" },
+    { "name": "Salt & Sugar Mixture", "primaryMonths": 24, "secondaryDays": 90, "storage": "Room Temp", "image": "powder.png" },
+    { "name": "Chai Powder", "primaryMonths": 12, "secondaryDays": 30, "storage": "Room Temp", "image": "powder.png" },
+    { "name": "Bou Powder", "primaryMonths": 12, "secondaryDays": 30, "storage": "Room Temp", "image": "powder.png" },
+    { "name": "Hot Cocoa Powder", "primaryMonths": null, "secondaryDays": null, "storage": "Room Temp", "image": "powder.png" },
+    { "name": "Matcha Powder", "primaryMonths": 18, "secondaryDays": 90, "storage": "Room Temp", "image": "powder.png" },
+    { "name": "Heavy Cream", "primaryMonths": 9, "secondaryDays": 3, "storage": "Chiller once opened", "image": "milk.png" },
+    { "name": "Brown Sugar Sachets", "primaryMonths": 24, "secondaryDays": null, "storage": "Room Temp", "image": "powder.png" },
+    { "name": "White Sugar Sachets", "primaryMonths": 24, "secondaryDays": null, "storage": "Room Temp", "image": "powder.png" },
+    { "name": "Bulk Granulated Sugar", "primaryMonths": 36, "secondaryDays": null, "storage": "Room Temp", "image": "powder.png" },
+    { "name": "Honey", "primaryMonths": 36, "secondaryDays": 90, "storage": "Room Temp", "image": "powder.png" },
+    { "name": "Cinnamon", "primaryMonths": null, "secondaryDays": 90, "storage": "Room Temp", "image": "powder.png" },
+    { "name": "Nutmeg", "primaryMonths": null, "secondaryDays": 90, "storage": "Room Temp", "image": "powder.png" },
+    { "name": "Turkish Coffee", "primaryMonths": 18, "secondaryDays": 10, "storage": "Room Temp", "image": "powder.png" },
+    { "name": "Boodies Tea Sachets", "primaryMonths": 36, "secondaryDays": null, "storage": "Room Temp", "image": "powder.png" }
+  ]
+}
