@@ -1,157 +1,55 @@
 [
   {
-    "category": "Syrups & Sauces",
-    "items": [
-      { "name": "Monin Flavor Syrup", "primaryMonths": 18, "secondaryDays": 60, "storage": "Room Temp", "image": "syrup.png" },
-      { "name": "Monin Coconut Syrup", "primaryMonths": 36, "secondaryDays": 60, "storage": "Room Temp", "image": "syrup.png" },
-      { "name": "Chocolate Sauces & Alternative", "primaryMonths": 12, "secondaryDays": 30, "storage": "Room Temp", "image": "sauce.png" },
-      { "name": "Caramel Sauce", "primaryMonths": 9, "secondaryDays": 14, "storage": "Room Temp", "image": "sauce.png" },
-      { "name": "Chocolate/Caramel Drizzle", "primaryMonths": null, "secondaryDays": 7, "storage": "Room Temp", "image": "sauce.png" }
-    ]
-  },
-  {
-    "category": "Smoothies & Shakes",
-    "items": [
-      { "name": "Smoothie Mix", "primaryMonths": 12, "secondaryDays": 7, "storage": "Chiller", "image": "mixin.png" },
-      { "name": "Smoothie Fruit Pack", "primaryMonths": 24, "secondaryDays": null, "storage": "Freezer", "image": "mixin.png" },
-      { "name": "Shake Powder", "primaryMonths": 12, "secondaryDays": 30, "storage": "Room Temp", "image": "powder.png" }
-    ]
-  },
-  {
-    "category": "Milks & Creams",
-    "items": [
-      { "name": "Fullfat / Skimmed / Lowfat Milk", "primaryMonths": 6, "secondaryDays": 3, "storage": "Chiller once opened", "image": "milk.png" },
-      { "name": "Almond / Rice / Oat Milk (Alpro)", "primaryMonths": 9, "secondaryDays": 5, "storage": "Chiller once opened", "image": "milk.png" },
-      { "name": "Soy & Coconut Milk (Alpro)", "primaryMonths": 10, "secondaryDays": 5, "storage": "Chiller once opened", "image": "milk.png" },
-      { "name": "Lactose Free Milk", "primaryMonths": 4, "secondaryDays": 3, "storage": "Chiller once opened", "image": "milk.png" },
-      { "name": "Heavy Cream", "primaryMonths": 9, "secondaryDays": 3, "storage": "Chiller once opened", "image": "milk.png" }
-    ]
-  },
-  {
-    "category": "Powders",
-    "items": [
-      { "name": "Chai Powder", "primaryMonths": 12, "secondaryDays": 30, "storage": "Room Temp", "image": "powder.png" },
-      { "name": "Matcha Powder", "primaryMonths": 18, "secondaryDays": 90, "storage": "Room Temp", "image": "powder.png" },
-      { "name": "Bou Powder", "primaryMonths": 12, "secondaryDays": 30, "storage": "Room Temp", "image": "powder.png" },
-      { "name": "Hot Cocoa Powder", "primaryMonths": 12, "secondaryDays": 30, "storage": "Room Temp", "image": "powder.png" }
-    ]
-  },
-  {
-    "category": "Mix-ins & Toppings",
-    "items": [
-      { "name": "Snicker Bits", "primaryMonths": 12, "secondaryDays": 90, "storage": "Chiller", "image": "mixin.png" },
-      { "name": "Oreo Cookies", "primaryMonths": 12, "secondaryDays": 90, "storage": "Room Temp", "image": "mixin.png" },
-      { "name": "Marshmallow Bits", "primaryMonths": 12, "secondaryDays": null, "storage": "Room Temp", "image": "mixin.png" },
-      { "name": "Dark Chocolate Chips", "primaryMonths": 24, "secondaryDays": null, "storage": "Room Temp", "image": "mixin.png" },
-      { "name": "Milk Chocolate Chips", "primaryMonths": 18, "secondaryDays": null, "storage": "Room Temp", "image": "mixin.png" },
-      { "name": "White Chocolate Chips", "primaryMonths": 12, "secondaryDays": null, "storage": "Room Temp", "image": "mixin.png" },
-      { "name": "Nibblers", "primaryMonths": 9, "secondaryDays": null, "storage": "Room Temp", "image": "mixin.png" }
-    ]
-  },
-  {
-    "category": "Sweeteners & Condiments",
-    "items": [
-      { "name": "Brown Sugar Sachets", "primaryMonths": 24, "secondaryDays": null, "storage": "Room Temp", "image": "condiment.png" },
-      { "name": "White Sugar Sachets", "primaryMonths": 24, "secondaryDays": null, "storage": "Room Temp", "image": "condiment.png" },
-      { "name": "Bulk Granulated Sugar", "primaryMonths": 36, "secondaryDays": null, "storage": "Room Temp", "image": "condiment.png" },
-      { "name": "Salt & Sugar Mixture", "primaryMonths": 24, "secondaryDays": 90, "storage": "Room Temp", "image": "condiment.png" },
-      { "name": "Honey", "primaryMonths": 36, "secondaryDays": 90, "storage": "Room Temp", "image": "condiment.png" },
-      { "name": "Cinnamon", "primaryMonths": null, "secondaryDays": 90, "storage": "Room Temp", "image": "condiment.png" },
-      { "name": "Nutmeg", "primaryMonths": null, "secondaryDays": 90, "storage": "Room Temp", "image": "condiment.png" }
-    ]
-  },
-  {
-    "category": "Coffee & Tea",
-    "items": [
-      { "name": "Turkish Coffee", "primaryMonths": 18, "secondaryDays": 10, "storage": "Room Temp", "image": "default.png" },
-      { "name": "Boodies Tea Sachets", "primaryMonths": 36, "secondaryDays": null, "storage": "Room Temp", "image": "default.png" },
-      { "name": "Lipton Tea Base", "primaryMonths": 36, "secondaryDays": null, "storage": "Room Temp", "image": "default.png" }
-    ]
-  },
-  {
     "category": "Croissants",
     "items": [
-      { "name": "FB Almond Croissant", "primaryMonths": null, "secondaryDays": 2, "storage": "Ambient", "image": "bakery.png" },
-      { "name": "FB Cheese Croissant", "primaryMonths": null, "secondaryDays": 2, "storage": "Ambient", "image": "bakery.png" },
-      { "name": "FB Pain Au Chocolate", "primaryMonths": null, "secondaryDays": 2, "storage": "Ambient", "image": "bakery.png" },
-      { "name": "FB Plain Croissant", "primaryMonths": null, "secondaryDays": 2, "storage": "Ambient", "image": "bakery.png" }
+      { "name": "FB Almond Croissant", "primaryMonths": null, "secondaryDays": 1.5, "storage": "Ambient", "image": "croissant.png" },
+      { "name": "FB Cheese Croissant", "primaryMonths": null, "secondaryDays": 1.5, "storage": "Ambient", "image": "croissant.png" },
+      { "name": "FB Pain Au Chocolate", "primaryMonths": null, "secondaryDays": 1.5, "storage": "Ambient", "image": "croissant.png" },
+      { "name": "FB Plain Croissant", "primaryMonths": null, "secondaryDays": 1.5, "storage": "Ambient", "image": "croissant.png" },
+      { "name": "Bridor Almond Croissant", "primaryMonths": null, "secondaryDays": 1, "storage": "Freezer/Ambient", "image": "croissant.png" },
+      { "name": "Bridor Cheese Croissant", "primaryMonths": null, "secondaryDays": 1, "storage": "Freezer/Ambient", "image": "croissant.png" },
+      { "name": "Bridor Pain Au Chocolate", "primaryMonths": null, "secondaryDays": 1, "storage": "Freezer/Ambient", "image": "croissant.png" },
+      { "name": "Bridor Plain Croissant", "primaryMonths": null, "secondaryDays": 1, "storage": "Freezer/Ambient", "image": "croissant.png" }
     ]
   },
   {
-    "category": "Croissant (Bridor)",
+    "category": "Muffins",
     "items": [
-      { "name": "Bridor Almond Croissant", "primaryMonths": null, "secondaryDays": 2, "storage": "Freezer/Ambient", "image": "bakery.png" },
-      { "name": "Bridor Cheese Croissant", "primaryMonths": null, "secondaryDays": 2, "storage": "Freezer/Ambient", "image": "bakery.png" },
-      { "name": "Bridor Pain Au Chocolate", "primaryMonths": null, "secondaryDays": 2, "storage": "Freezer/Ambient", "image": "bakery.png" },
-      { "name": "Bridor Plain Croissant", "primaryMonths": null, "secondaryDays": 2, "storage": "Freezer/Ambient", "image": "bakery.png" }
+      { "name": "Low Fat Blueberry Muffin", "primaryMonths": null, "secondaryDays": 2, "storage": "Ambient", "image": "muffin.png" },
+      { "name": "Chocolate Muffin", "primaryMonths": null, "secondaryDays": 2, "storage": "Ambient", "image": "muffin.png" },
+      { "name": "Low Fat Vanilla Muffin", "primaryMonths": null, "secondaryDays": 2, "storage": "Ambient", "image": "muffin.png" },
+      { "name": "Salted Caramel Muffin", "primaryMonths": null, "secondaryDays": 2, "storage": "Ambient", "image": "muffin.png" }
     ]
   },
   {
-    "category": "Sandwiches",
+    "category": "Donuts",
     "items": [
-      { "name": "Turkey Cheese Croissant", "primaryMonths": null, "secondaryDays": 2, "storage": "Chiller", "image": "sandwich.png" },
-      { "name": "Scrambled Egg Turkey Croissant", "primaryMonths": null, "secondaryDays": 2, "storage": "Chiller", "image": "sandwich.png" },
-      { "name": "Simit Kashkaval", "primaryMonths": null, "secondaryDays": 2, "storage": "Chiller", "image": "sandwich.png" },
-      { "name": "Turkey Cheese Melt", "primaryMonths": null, "secondaryDays": 2, "storage": "Chiller", "image": "sandwich.png" },
-      { "name": "Smoked Turkey Sandwich", "primaryMonths": null, "secondaryDays": 2, "storage": "Chiller", "image": "sandwich.png" },
-      { "name": "Chicken Avocado Sandwich", "primaryMonths": null, "secondaryDays": 2, "storage": "Chiller", "image": "sandwich.png" },
-      { "name": "Grilled Chicken with Mozarella", "primaryMonths": null, "secondaryDays": 2, "storage": "Chiller", "image": "sandwich.png" },
-      { "name": "Grilled Halloumi Sandwich", "primaryMonths": null, "secondaryDays": 2, "storage": "Chiller", "image": "sandwich.png" },
-      { "name": "Beef Fajita", "primaryMonths": null, "secondaryDays": 2, "storage": "Chiller", "image": "sandwich.png" },
-      { "name": "Butter Chicken in Corn Bread", "primaryMonths": null, "secondaryDays": 2, "storage": "Chiller", "image": "sandwich.png" },
-      { "name": "Crunchy Chicken & Purple Slaw", "primaryMonths": null, "secondaryDays": 2, "storage": "Chiller", "image": "sandwich.png" },
-      { "name": "Grilled Cheese Pesto", "primaryMonths": null, "secondaryDays": 2, "storage": "Chiller", "image": "sandwich.png" }
-    ]
-  },
-  {
-    "category": "Muffins & Donuts",
-    "items": [
-      { "name": "Low Fat Blueberry Muffin", "primaryMonths": null, "secondaryDays": 2, "storage": "Ambient", "image": "dessert.png" },
-      { "name": "Chocolate Muffin", "primaryMonths": null, "secondaryDays": 2, "storage": "Ambient", "image": "dessert.png" },
-      { "name": "Low Fat Vanilla Muffin", "primaryMonths": null, "secondaryDays": 2, "storage": "Ambient", "image": "dessert.png" },
-      { "name": "Salted Caramel Muffin", "primaryMonths": null, "secondaryDays": 2, "storage": "Ambient", "image": "dessert.png" },
-      { "name": "Chocolate Donut", "primaryMonths": null, "secondaryDays": 2, "storage": "Ambient", "image": "dessert.png" },
-      { "name": "Sugar Donut", "primaryMonths": null, "secondaryDays": 2, "storage": "Ambient", "image": "dessert.png" }
+      { "name": "Chocolate Donut", "primaryMonths": null, "secondaryDays": 1.5, "storage": "Ambient", "image": "donut.png" },
+      { "name": "Sugar Donut", "primaryMonths": null, "secondaryDays": 1.5, "storage": "Ambient", "image": "donut.png" }
     ]
   },
   {
     "category": "Cookies",
     "items": [
-      { "name": "Milk Chocolate Cookie", "primaryMonths": null, "secondaryDays": 3, "storage": "Ambient", "image": "dessert.png" },
-      { "name": "Double Chocolate Cookie", "primaryMonths": null, "secondaryDays": 3, "storage": "Ambient", "image": "dessert.png" },
-      { "name": "Oatmeal Raisin Cookie", "primaryMonths": null, "secondaryDays": 3, "storage": "Ambient", "image": "dessert.png" },
-      { "name": "White Macadamia Cookie", "primaryMonths": null, "secondaryDays": 3, "storage": "Ambient", "image": "dessert.png" }
+      { "name": "Milk Chocolate Cookie", "primaryMonths": null, "secondaryDays": 3, "storage": "Ambient", "image": "cookie.png" },
+      { "name": "Double Chocolate Cookie", "primaryMonths": null, "secondaryDays": 3, "storage": "Ambient", "image": "cookie.png" },
+      { "name": "Oatmeal Raisin Cookie", "primaryMonths": null, "secondaryDays": 3, "storage": "Ambient", "image": "cookie.png" },
+      { "name": "White Macadamia Cookie", "primaryMonths": null, "secondaryDays": 3, "storage": "Ambient", "image": "cookie.png" }
     ]
   },
   {
-    "category": "Loaf Cakes & Cakes",
+    "category": "Loaf Cakes",
     "items": [
-      { "name": "Banana Walnut Loaf", "primaryMonths": null, "secondaryDays": 3, "storage": "Ambient", "image": "dessert.png" },
-      { "name": "Lemon Loaf", "primaryMonths": null, "secondaryDays": 3, "storage": "Ambient", "image": "dessert.png" },
-      { "name": "Baked Cheesecake", "primaryMonths": null, "secondaryDays": 3, "storage": "Chiller", "image": "dessert.png" },
-      { "name": "Tiramisu", "primaryMonths": null, "secondaryDays": 3, "storage": "Chiller", "image": "dessert.png" },
-      { "name": "Carrot Cake", "primaryMonths": null, "secondaryDays": 3, "storage": "Chiller", "image": "dessert.png" },
-      { "name": "Honey Cake", "primaryMonths": 1, "secondaryDays": 3, "storage": "Freezer / Chiller", "image": "dessert.png" },
-      { "name": "Red Velvet Cake (Frozen)", "primaryMonths": null, "secondaryDays": 5, "storage": "Chiller", "image": "dessert.png" },
-      { "name": "Chocolate Fudge Cake (Frozen)", "primaryMonths": null, "secondaryDays": 5, "storage": "Chiller", "image": "dessert.png" }
+      { "name": "Banana Walnut", "primaryMonths": null, "secondaryDays": 3, "storage": "Ambient", "image": "loafcake.png" },
+      { "name": "Lemon Loaf", "primaryMonths": null, "secondaryDays": 3, "storage": "Ambient", "image": "loafcake.png" }
     ]
   },
   {
-    "category": "Pots & Brekkie",
+    "category": "Pots",
     "items": [
-      { "name": "Acai Chocolate Yoghurt Pot", "primaryMonths": null, "secondaryDays": 2, "storage": "Chiller", "image": "dessert.png" },
-      { "name": "Blueberry Passion Pot", "primaryMonths": null, "secondaryDays": 2, "storage": "Chiller", "image": "dessert.png" },
-      { "name": "Bircher Brekkie", "primaryMonths": null, "secondaryDays": 2, "storage": "Chiller", "image": "dessert.png" }
-    ]
-  },
-  {
-    "category": "Salads & Hot Meals",
-    "items": [
-      { "name": "Thai Beef Noodle Salad", "primaryMonths": null, "secondaryDays": 2, "storage": "Chiller", "image": "sandwich.png" },
-      { "name": "Mediterranean Artichoke Salad", "primaryMonths": null, "secondaryDays": 2, "storage": "Chiller", "image": "sandwich.png" },
-      { "name": "Grilled Chicken & Wild Rice Salad", "primaryMonths": null, "secondaryDays": 2, "storage": "Chiller", "image": "sandwich.png" },
-      { "name": "Beef Mongolian Bowl", "primaryMonths": null, "secondaryDays": 2, "storage": "Chiller", "image": "sandwich.png" },
-      { "name": "Chicken Teriyaki Bowl", "primaryMonths": null, "secondaryDays": 2, "storage": "Chiller", "image": "sandwich.png" }
+      { "name": "Acai Chocolate Yoghurt Pot", "primaryMonths": null, "secondaryDays": 2, "storage": "Chiller", "image": "pot.png" },
+      { "name": "Blueberry Passion Pot", "primaryMonths": null, "secondaryDays": 2, "storage": "Chiller", "image": "pot.png" },
+      { "name": "Bircher Brekkie", "primaryMonths": null, "secondaryDays": 2, "storage": "Chiller", "image": "pot.png" }
     ]
   },
   {
@@ -162,6 +60,34 @@
       { "name": "Pomegranate Juice", "primaryMonths": null, "secondaryDays": 3, "storage": "Chiller", "image": "juice.png" },
       { "name": "Thrill Green Goodness", "primaryMonths": null, "secondaryDays": 21, "storage": "Chiller", "image": "juice.png" },
       { "name": "Thrill Burn Stubborn", "primaryMonths": null, "secondaryDays": 21, "storage": "Chiller", "image": "juice.png" }
+    ]
+  },
+  {
+    "category": "Syrups & Sauces",
+    "items": [
+      { "name": "Monin Flavor Syrup", "primaryMonths": 18, "secondaryDays": 60, "storage": "Room Temp", "image": "syrup.png" },
+      { "name": "Monin Coconut Syrup", "primaryMonths": 36, "secondaryDays": 60, "storage": "Room Temp", "image": "syrup.png" },
+      { "name": "Chocolate Sauces & Alternative", "primaryMonths": 12, "secondaryDays": 30, "storage": "Room Temp", "image": "syrup.png" },
+      { "name": "Caramel Sauce", "primaryMonths": 9, "secondaryDays": 14, "storage": "Room Temp", "image": "syrup.png" },
+      { "name": "Chocolate/Caramel Drizzle", "primaryMonths": null, "secondaryDays": 7, "storage": "Room Temp", "image": "syrup.png" }
+    ]
+  },
+  {
+    "category": "Chocolate Chips",
+    "items": [
+      { "name": "Dark Chocolate Chips", "primaryMonths": 24, "secondaryDays": null, "storage": "Room Temp", "image": "chocolate.png" },
+      { "name": "Milk Chocolate Chips", "primaryMonths": 18, "secondaryDays": 90, "storage": "Room Temp", "image": "chocolate.png" },
+      { "name": "White Chocolate Chips", "primaryMonths": 12, "secondaryDays": null, "storage": "Room Temp", "image": "chocolate.png" }
+    ]
+  },
+  {
+    "category": "Milk & Cream",
+    "items": [
+      { "name": "Fullfat, Skimmed, Lowfat Milk", "primaryMonths": 6, "secondaryDays": 3, "storage": "Chiller once opened", "image": "milk.png" },
+      { "name": "Almond, Rice & Oat Milk (Alpro)", "primaryMonths": 9, "secondaryDays": 5, "storage": "Chiller once opened", "image": "milk.png" },
+      { "name": "Soy & Coconut Milk (Alpro)", "primaryMonths": 10, "secondaryDays": 5, "storage": "Chiller once opened", "image": "milk.png" },
+      { "name": "Lactose Free Milk", "primaryMonths": 4, "secondaryDays": 3, "storage": "Chiller once opened", "image": "milk.png" },
+      { "name": "Heavy Cream", "primaryMonths": 9, "secondaryDays": 3, "storage": "Chiller once opened", "image": "milk.png" }
     ]
   }
 ]
