@@ -1,206 +1,193 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Shelf Life Tracker</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Shelf Life Calculator — Day Dots</title>
 <style>
   body {
-    font-family: Arial, sans-serif;
-    background-color: #f5f5f5;
-    margin: 20px;
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: #f5f7fa;
+    margin: 0;
+    color: #222;
   }
-  h2 {
-    margin-top: 40px;
-    border-bottom: 2px solid #333;
-    padding-bottom: 5px;
+  header {
+    background: linear-gradient(90deg, #007bff, #00bcd4);
+    color: white;
+    padding: 16px;
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  }
+  main {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 0 10px;
+  }
+  .category {
+    background: white;
+    margin-bottom: 24px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+    overflow: hidden;
+  }
+  .category h2 {
+    background: #f0f4f9;
+    padding: 12px 16px;
+    margin: 0;
+    font-size: 18px;
+    border-bottom: 1px solid #e2e6ea;
   }
   table {
     width: 100%;
     border-collapse: collapse;
-    margin-bottom: 30px;
   }
   th, td {
-    padding: 8px 12px;
+    padding: 10px;
     text-align: left;
-    vertical-align: middle;
   }
   th {
-    background-color: #333;
-    color: #fff;
-    position: sticky;
-    top: 0;
+    background: #fafafa;
+    font-weight: 600;
+    font-size: 13px;
+    border-bottom: 1px solid #eaeaea;
   }
-  tr:nth-child(even) {
-    background-color: #f0f0f0;
+  tr:nth-child(even) td {
+    background: #f9fbfd;
   }
-  tr:nth-child(odd) {
-    background-color: #ffffff;
-  }
-  img.product-img {
+  td img {
     width: 40px;
     height: 40px;
+    border-radius: 8px;
     object-fit: cover;
+    margin-right: 10px;
+    vertical-align: middle;
   }
-  .day-dot {
-    font-size: 16px;
+  .dot {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 6px;
+  }
+  .red { background:#e74c3c; }
+  .green { background:#27ae60; }
+  .blue { background:#3498db; }
+  .purple { background:#9b59b6; }
+  .black { background:#2c3e50; }
+  .yellow { background:#f1c40f; }
+  .orange { background:#e67e22; }
+  .small { font-size:12px; color:#555; }
+  input[type="date"], select {
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+  }
+  .result {
     font-weight: bold;
-  }
-  input[type="date"], select, button {
-    padding: 4px;
-    font-size: 14px;
   }
 </style>
 </head>
 <body>
-
-<h1>Shelf Life Tracker</h1>
-
-<div id="products-container"></div>
+<header>Shelf Life Calculator — Day Dots</header>
+<main id="content">
+  <p style="color:#444;margin-bottom:20px;">
+    Automatically uses today as open date and applies <strong>Secondary Shelf Life</strong> by default.  
+    Each item’s expiry and weekday color dot are calculated automatically.
+  </p>
+</main>
 
 <script>
-  const dayColors = {
-    0: '🟠', // Sunday
-    1: '🔴', // Monday
-    2: '🟢', // Tuesday
-    3: '🔵', // Wednesday
-    4: '🟣', // Thursday
-    5: '⚫', // Friday
-    6: '🟡'  // Saturday
-  };
+async function loadProducts() {
+  const response = await fetch('products.json');
+  const data = await response.json();
+  buildUI(data);
+}
 
-  const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+function dotColor(day) {
+  return ['orange','red','green','blue','purple','black','yellow'][day];
+}
 
-  function calculateExpiry(openDate, type, product) {
-    const date = new Date(openDate);
-    if(type === "Primary" && product.primaryMonths != null) {
-      date.setMonth(date.getMonth() + product.primaryMonths);
-    } else if(type === "Secondary" && product.secondaryDays != null) {
-      date.setDate(date.getDate() + product.secondaryDays);
-    }
-    return date;
-  }
+function formatDate(d) {
+  return d.toISOString().split('T')[0];
+}
 
-  function formatDate(date) {
-    return date.toISOString().split('T')[0];
-  }
+function addDays(date, days) {
+  const result = new Date(date);
+  result.setDate(result.getDate() + days);
+  return result;
+}
 
-  function createProductRow(product) {
-    const tr = document.createElement('tr');
+function addMonths(date, months) {
+  const result = new Date(date);
+  const day = result.getDate();
+  result.setMonth(result.getMonth() + months);
+  if (result.getDate() < day) result.setDate(0);
+  return result;
+}
 
-    // Image column
-    const tdImg = document.createElement('td');
-    const img = document.createElement('img');
-    img.src = `images/${product.image}`;
-    img.alt = product.name;
-    img.className = 'product-img';
-    tdImg.appendChild(img);
-    tr.appendChild(tdImg);
+function buildUI(categories) {
+  const container = document.getElementById('content');
+  const today = new Date();
 
-    // Name column
-    const tdName = document.createElement('td');
-    tdName.textContent = product.name;
-    tr.appendChild(tdName);
+  categories.forEach(cat => {
+    const card = document.createElement('div');
+    card.className = 'category';
 
-    // Storage
-    const tdStorage = document.createElement('td');
-    tdStorage.textContent = product.storage;
-    tr.appendChild(tdStorage);
+    const header = document.createElement('h2');
+    header.textContent = cat.category;
+    card.appendChild(header);
 
-    // Primary months
-    const tdPrimary = document.createElement('td');
-    tdPrimary.textContent = product.primaryMonths !== null ? product.primaryMonths : '-';
-    tr.appendChild(tdPrimary);
+    const table = document.createElement('table');
+    const thead = document.createElement('thead');
+    thead.innerHTML = `
+      <tr>
+        <th>Product</th>
+        <th>Storage</th>
+        <th>Primary</th>
+        <th>Secondary</th>
+        <th>Open Date</th>
+        <th>Expiry</th>
+        <th>Day Dot</th>
+      </tr>`;
+    table.appendChild(thead);
 
-    // Secondary days
-    const tdSecondary = document.createElement('td');
-    tdSecondary.textContent = product.secondaryDays !== null ? product.secondaryDays : '-';
-    tr.appendChild(tdSecondary);
+    const tbody = document.createElement('tbody');
 
-    // Date input
-    const tdDate = document.createElement('td');
-    const inputDate = document.createElement('input');
-    inputDate.type = 'date';
-    const today = new Date();
-    inputDate.value = formatDate(today);
-    tdDate.appendChild(inputDate);
-    tr.appendChild(tdDate);
+    cat.items.forEach(p => {
+      const tr = document.createElement('tr');
+      const date = formatDate(today);
+      let expiryDate = today;
+      if (p.secondaryDays) {
+        expiryDate = addDays(today, p.secondaryDays);
+      } else if (p.primaryMonths) {
+        expiryDate = addMonths(today, p.primaryMonths);
+      }
+      const expiryStr = formatDate(expiryDate);
+      const weekday = expiryDate.getDay();
+      const color = dotColor(weekday);
+      const label = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'][weekday];
 
-    // Dropdown
-    const tdDropdown = document.createElement('td');
-    const select = document.createElement('select');
-    const optionPrimary = document.createElement('option');
-    optionPrimary.value = 'Primary';
-    optionPrimary.textContent = 'Primary';
-    const optionSecondary = document.createElement('option');
-    optionSecondary.value = 'Secondary';
-    optionSecondary.textContent = 'Secondary';
-    optionSecondary.selected = true;
-    select.appendChild(optionPrimary);
-    select.appendChild(optionSecondary);
-    tdDropdown.appendChild(select);
-    tr.appendChild(tdDropdown);
+      tr.innerHTML = `
+        <td><img src="images/${p.image || 'default.png'}" alt="">${p.name}</td>
+        <td class="small">${p.storage || '-'}</td>
+        <td>${p.primaryMonths ? p.primaryMonths + ' mo' : '-'}</td>
+        <td>${p.secondaryDays ? p.secondaryDays + ' d' : '-'}</td>
+        <td>${date}</td>
+        <td class="result">${expiryStr}</td>
+        <td><span class="dot ${color}" title="${label}"></span><span class="small">${label}</span></td>
+      `;
+      tbody.appendChild(tr);
+    });
 
-    // Expiry date
-    const tdExpiry = document.createElement('td');
-    tr.appendChild(tdExpiry);
+    table.appendChild(tbody);
+    card.appendChild(table);
+    container.appendChild(card);
+  });
+}
 
-    // Day dot + text
-    const tdDot = document.createElement('td');
-    tdDot.className = 'day-dot';
-    tr.appendChild(tdDot);
-
-    function updateExpiry() {
-      const selectedDate = inputDate.value;
-      const selectedType = select.value;
-      const expiry = calculateExpiry(selectedDate, selectedType, product);
-      tdExpiry.textContent = formatDate(expiry);
-      tdDot.textContent = `${dayColors[expiry.getDay()]} ${days[expiry.getDay()]}`;
-    }
-
-    updateExpiry();
-    inputDate.addEventListener('change', updateExpiry);
-    select.addEventListener('change', updateExpiry);
-
-    return tr;
-  }
-
-  // Load products.json
-  fetch('products.json')
-    .then(response => response.json())
-    .then(data => {
-      const container = document.getElementById('products-container');
-
-      Object.keys(data).forEach(category => {
-        const categoryHeader = document.createElement('h2');
-        categoryHeader.textContent = category;
-        container.appendChild(categoryHeader);
-
-        const table = document.createElement('table');
-
-        // Table headers
-        const thead = document.createElement('thead');
-        const trHead = document.createElement('tr');
-        ['Image','Product Name','Storage','Primary (months)','Secondary (days)','Opened / Mfg Date','Shelf Life Type','Expiry Date','Day'].forEach(h => {
-          const th = document.createElement('th');
-          th.textContent = h;
-          trHead.appendChild(th);
-        });
-        thead.appendChild(trHead);
-        table.appendChild(thead);
-
-        const tbody = document.createElement('tbody');
-
-        data[category].forEach(product => {
-          tbody.appendChild(createProductRow(product));
-        });
-
-        table.appendChild(tbody);
-        container.appendChild(table);
-      });
-    })
-    .catch(err => console.error('Error loading products.json:', err));
+loadProducts();
 </script>
-
 </body>
 </html>
